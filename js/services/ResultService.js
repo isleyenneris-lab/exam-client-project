@@ -12,6 +12,12 @@ export class ResultService {
     return StorageService.get(RESULTS_KEY);
   }
 
+  // קבלת תוצאה אחת לפי ID
+  // נשתמש בזה כדי שהמורה יוכל לפתוח בחינה מסוימת של סטודנט
+  static getById(resultId) {
+    return this.getAll().find(result => result.id === resultId);
+  }
+
   // קבלת תוצאות לפי סטודנט
   static getByStudent(studentId) {
     return this.getAll().filter(result => result.studentId === studentId);
@@ -22,7 +28,20 @@ export class ResultService {
     return this.getAll().filter(result => result.examId === examId);
   }
 
-  // שמירת תוצאה חדשה
+  // חישוב ממוצע ציונים לפי מבחן
+static getExamAverage(examId) {
+  const results = this.getByExam(examId);
+
+  if (results.length === 0) {
+    return 0;
+  }
+
+  const sum = results.reduce((total, result) => total + result.score, 0);
+
+  return Math.round(sum / results.length);
+}
+
+  // שמירת תוצאה חדשה לאחר שהסטודנט מסיים מבחן
   static saveResult(exam, student, selectedAnswers) {
     let correct = 0;
 
@@ -33,11 +52,12 @@ export class ResultService {
       }
     });
 
-    // חישוב ציון
+    // חישוב ציון באחוזים
     const score = exam.questions.length === 0
       ? 0
       : Math.round((correct / exam.questions.length) * 100);
 
+    // יצירת אובייקט תוצאה חדש
     const result = new Result(
       crypto.randomUUID(),
       exam.id,
@@ -48,10 +68,13 @@ export class ResultService {
       selectedAnswers
     );
 
+    // שליפת כל התוצאות הקיימות
     const results = this.getAll();
 
+    // הוספת התוצאה החדשה
     results.push(result);
 
+    // שמירה ב-localStorage
     StorageService.set(RESULTS_KEY, results);
 
     return result;
@@ -71,6 +94,7 @@ export class ResultService {
   }
 
   // קבלת שם מבחן לפי ID
+  // אם המבחן נמחק, יוצג טקסט מתאים במקום שגיאה
   static getExamTitle(examId) {
     const exam = ExamService.getById(examId);
     return exam ? exam.title : 'מבחן שנמחק';

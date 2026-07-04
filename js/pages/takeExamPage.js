@@ -81,17 +81,23 @@ function renderExam() {
     const result = ResultService.saveResult(exam, user, selectedAnswers);
 
     resultBox.innerHTML = `
-      <div class="alert alert-success text-center">
-        <h2>המבחן נשלח בהצלחה</h2>
+        <div class="alert alert-success text-center">
+            <h2>המבחן נשלח בהצלחה</h2>
 
-        <p class="display-6">
-          הציון שלך: ${result.score}
-        </p>
+            <p class="display-6">
+             הציון שלך: ${result.score}
+            </p>
 
-        <a class="btn btn-primary" href="student.html">
-          חזרה לדף סטודנט
-        </a>
-      </div>
+            <div class="d-flex justify-content-center gap-2 flex-wrap">
+                <a class="btn btn-success" href="review-exam.html?resultId=${result.id}">
+                 צפייה בתשובות
+                </a>
+
+                <a class="btn btn-primary" href="student.html">
+                 חזרה לדף סטודנט
+                 </a>
+            </div>
+        </div>
     `;
 
     takeExamForm.style.display = 'none';

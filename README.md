@@ -44,6 +44,9 @@ https://github.com/isleyenneris-lab/exam-client-project
 - למחוק שאלות
 - למחוק מבחנים
 - לראות תוצאות של סטודנטים שביצעו את המבחן
+- לראות ציון סופי של כל סטודנט
+- לצפות בבחינה שהתלמיד ביצע
+- לראות לכל שאלה האם הסטודנט צדק או טעה
 
 ### סטודנט
 
@@ -56,6 +59,9 @@ https://github.com/isleyenneris-lab/exam-client-project
 - לראות ציון מיד לאחר סיום המבחן
 - לראות היסטוריית מבחנים
 - לראות ממוצע ציונים
+- צפייה בסקירת מבחן לאחר ביצוע
+- הצגת התשובה שסומנה מול התשובה הנכונה
+- סימון שאלות נכונות ושגויות
 
 ---
 
@@ -170,7 +176,9 @@ exam-client-project/
 ├── exam-details.html
 ├── student.html
 ├── search.html
+├── review-exam.html
 ├── take-exam.html
+├── teacher-result.html
 ├── README.md
 │
 ├── css/
@@ -196,6 +204,8 @@ exam-client-project/
         ├── examDetailsPage.js
         ├── studentPage.js
         ├── searchPage.js
+        ├── reviewExamPage.js
+        ├── teacherResultPage.js
         └── takeExamPage.js
 ```
 

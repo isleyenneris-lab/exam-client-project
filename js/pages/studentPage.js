@@ -29,16 +29,36 @@ function renderHistory() {
     return;
   }
 
-  historyList.innerHTML = results.map(result => `
-    <div class="result-item">
-      <h5>${ResultService.getExamTitle(result.examId)}</h5>
+    historyList.innerHTML = results.map(result => {
+        const examAverage = ResultService.getExamAverage(result.examId);
 
-      <p>
-        ציון: <strong>${result.score}</strong> |
-        שאלות: ${result.totalQuestions}
-      </p>
+        return `
+            <div class="result-item">
+                <h5>${ResultService.getExamTitle(result.examId)}</h5>
 
-      <small>${new Date(result.date).toLocaleString('he-IL')}</small>
-    </div>
-  `).join('');
+                <p>
+                    <strong>הציון שלי:</strong>
+                    ${result.score}
+                </p>
+
+                <p>
+                    <strong>ממוצע הבחינה:</strong>
+                    ${examAverage}
+                </p>
+
+                <p>
+                    <strong>מספר שאלות:</strong>
+                    ${result.totalQuestions}
+                </p>
+
+                <small>${new Date(result.date).toLocaleString('he-IL')}</small>
+
+                <br><br>
+
+                <a class="btn btn-sm btn-outline-primary" href="review-exam.html?resultId=${result.id}">
+                 צפייה בבחינה
+                </a>
+            </div>
+        `;
+    }).join('');
 }

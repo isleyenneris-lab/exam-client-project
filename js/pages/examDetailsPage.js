@@ -119,20 +119,58 @@ function renderQuestions(exam) {
   });
 }
 
-// הצגת תוצאות סטודנטים
+// הצגת תוצאות סטודנטים + ממוצע ציונים של הבחינה
 function renderResults(examId) {
   const results = ResultService.getByExam(examId);
+  const examAverage = ResultService.getExamAverage(examId);
 
   if (results.length === 0) {
-    resultList.innerHTML = '<p class="text-muted">עדיין אין תוצאות למבחן.</p>';
+    resultList.innerHTML = `
+      <div class="alert alert-info">
+        עדיין אין תוצאות למבחן.
+      </div>
+    `;
     return;
   }
 
-  resultList.innerHTML = results.map(result => `
-    <div class="result-item">
-      <strong>${result.studentName}</strong> - ציון: ${result.score}
+  resultList.innerHTML = `
+    <div class="alert alert-primary">
+      <strong>ממוצע ציונים של הבחינה:</strong>
+      ${examAverage}
       <br>
-      <small>${new Date(result.date).toLocaleString('he-IL')}</small>
+      <strong>מספר סטודנטים שביצעו את הבחינה:</strong>
+      ${results.length}
     </div>
-  `).join('');
+
+    ${results.map(result => `
+      <div class="result-item">
+        <h5>${result.studentName}</h5>
+
+        <p>
+          <strong>ציון סופי:</strong>
+          ${result.score}
+        </p>
+
+        <p>
+          <strong>ממוצע הבחינה:</strong>
+          ${examAverage}
+        </p>
+
+        <p>
+          <strong>מספר שאלות:</strong>
+          ${result.totalQuestions}
+        </p>
+
+        <small>
+          ${new Date(result.date).toLocaleString('he-IL')}
+        </small>
+
+        <br><br>
+
+        <a class="btn btn-sm btn-outline-primary" href="teacher-result.html?resultId=${result.id}">
+          צפייה בבחינה
+        </a>
+      </div>
+    `).join('')}
+  `;
 }
