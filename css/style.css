@@ -1,0 +1,72 @@
+/* עיצוב כללי לכל האתר */
+body {
+  background: #f4f6f9;
+  font-family: Arial, sans-serif;
+}
+
+/* כרטיס גדול בדף הראשי */
+.hero-card {
+  background: white;
+  border-radius: 18px;
+  padding: 50px 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* עמודים קטנים כמו התחברות והרשמה */
+.small-page {
+  max-width: 520px;
+}
+
+/* עיצוב כרטיסים */
+.card {
+  border: none;
+  border-radius: 14px;
+}
+
+.card-header {
+  border-radius: 14px 14px 0 0 !important;
+  font-weight: bold;
+}
+
+/* עיצוב פריט מבחן / שאלה / תוצאה */
+.exam-item,
+.question-item,
+.result-item {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 12px;
+  background: white;
+}
+
+/* עיצוב קוד מבחן */
+.exam-code {
+  font-family: monospace;
+  background: #eef2ff;
+  padding: 3px 8px;
+  border-radius: 8px;
+}
+
+/* עיצוב תשובות במבחן */
+.option-box {
+  display: block;
+  border: 1px solid #ddd;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  background: white;
+}
+
+.option-box:hover {
+  background: #f0f7ff;
+}
+
+/* עיצוב כפתורים */
+.btn-danger,
+.btn-warning,
+.btn-primary,
+.btn-success,
+.btn-dark {
+  border-radius: 10px;
+}
