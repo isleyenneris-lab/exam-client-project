@@ -13,7 +13,6 @@ export class ResultService {
   }
 
   // קבלת תוצאה אחת לפי ID
-  // נשתמש בזה כדי שהמורה יוכל לפתוח בחינה מסוימת של סטודנט
   static getById(resultId) {
     return this.getAll().find(result => result.id === resultId);
   }
@@ -29,17 +28,17 @@ export class ResultService {
   }
 
   // חישוב ממוצע ציונים לפי מבחן
-static getExamAverage(examId) {
-  const results = this.getByExam(examId);
+  static getExamAverage(examId) {
+    const results = this.getByExam(examId);
 
-  if (results.length === 0) {
-    return 0;
+    if (results.length === 0) {
+      return 0;
+    }
+
+    const sum = results.reduce((total, result) => total + result.score, 0);
+
+    return Math.round(sum / results.length);
   }
-
-  const sum = results.reduce((total, result) => total + result.score, 0);
-
-  return Math.round(sum / results.length);
-}
 
   // שמירת תוצאה חדשה לאחר שהסטודנט מסיים מבחן
   static saveResult(exam, student, selectedAnswers) {
@@ -47,7 +46,15 @@ static getExamAverage(examId) {
 
     // בדיקת תשובות נכונות
     exam.questions.forEach((question, index) => {
-      if (Number(selectedAnswers[index]) === Number(question.correctIndex)) {
+      const studentAnswer = selectedAnswers[index];
+
+      // אם הסטודנט לא בחר תשובה, זה נחשב טעות
+      if (studentAnswer === null || studentAnswer === undefined) {
+        return;
+      }
+
+      // רק אם באמת נבחרה תשובה, בודקים אם היא נכונה
+      if (Number(studentAnswer) === Number(question.correctIndex)) {
         correct++;
       }
     });
@@ -94,7 +101,6 @@ static getExamAverage(examId) {
   }
 
   // קבלת שם מבחן לפי ID
-  // אם המבחן נמחק, יוצג טקסט מתאים במקום שגיאה
   static getExamTitle(examId) {
     const exam = ExamService.getById(examId);
     return exam ? exam.title : 'מבחן שנמחק';
